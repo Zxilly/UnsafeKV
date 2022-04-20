@@ -5,8 +5,8 @@
   "repository": "git@github.com:Zxilly/UnsafeKV.git",
   "author": "Zxilly <zxilly@outlook.com>",
   "scripts": {
-    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack --progress --mode production",
-    "build-dev": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack --progress --mode none"
+    "build": "webpack --progress --mode production",
+    "build-dev": "webpack --progress --mode none"
   },
   "license": "MIT",
   "devDependencies": {
