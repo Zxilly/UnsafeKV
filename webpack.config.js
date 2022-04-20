@@ -8,7 +8,11 @@ module.exports = {
         }]
     },
     resolve: {
-        extensions: ['.ts', '.js']
+        extensions: ['.ts', '.js'],
+        fallback: {
+            "path": require.resolve("path-browserify"),
+            "fs": false
+        }
     },
     target: "webworker",
     output: {

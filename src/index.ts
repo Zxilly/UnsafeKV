@@ -1,5 +1,13 @@
 import {toKVNamespaceGetOptions, toKVNamespaceListOptions, toKVNamespacePutOptions, toObject} from "./utils";
 
+import sourceMapSupport from 'source-map-support';
+
+sourceMapSupport.install({
+    environment: 'browser',
+    handleUncaughtExceptions: true,
+    hookRequire: false,
+});
+
 addEventListener("fetch", (event) => {
     event.respondWith(handleRequest(event.request).catch(err => new Response(err.stack, {status: 500})));
 });

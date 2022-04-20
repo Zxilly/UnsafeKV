@@ -20,7 +20,8 @@
     "noFallthroughCasesInSwitch": true,
     "types": [
       "@cloudflare/workers-types"
-    ]
+    ],
+    "allowSyntheticDefaultImports": true
   },
   "include": [
     "src/**/*",
