@@ -1,3 +1,5 @@
+const path = require("path");
+
 module.exports = {
     entry: './src/index.ts',
     devtool: 'inline-source-map',
@@ -8,16 +10,22 @@ module.exports = {
             exclude: /node_modules/
         }]
     },
+    node: false,
+    mode: 'production',
     resolve: {
         extensions: ['.ts', '.js'],
         fallback: {
-            "path": false,
+            "path": require.resolve("path-browserify"),
             "fs": false
         }
     },
+    stats: {
+        colors: true,
+        reasons: true
+    },
     target: "webworker",
     output: {
-        path: __dirname,
-        filename: "index.js"
-    }
+        path: path.join(__dirname, 'dist'),
+        filename: 'worker.js',
+    },
 };

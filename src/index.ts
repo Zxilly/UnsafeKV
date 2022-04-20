@@ -1,15 +1,17 @@
 import {toKVNamespaceGetOptions, toKVNamespaceListOptions, toKVNamespacePutOptions, toObject} from "./utils";
+import sourcemap from 'source-map-support';
 
-import sourceMapSupport from 'source-map-support';
-
-sourceMapSupport.install({
-    environment: 'browser',
+sourcemap.install({
     handleUncaughtExceptions: true,
-    hookRequire: false,
+    environment: 'auto',
 });
 
 addEventListener("fetch", (event) => {
-    event.respondWith(handleRequest(event.request).catch(err => new Response(err.stack, {status: 500})));
+    event.respondWith(handleRequest(event.request).catch((err:Error) => {
+        console.error(err);
+        console.log(sourcemap.getErrorSource(err))
+        return new Response(err.stack, {status: 500})
+    }));
 });
 
 export type stringDict = { [key: string]: string };
@@ -18,11 +20,14 @@ async function handleRequest(request: Request): Promise<Response> {
     const url = new URL(request.url);
     const key = url.pathname.slice(1);
 
-    const options = toObject(url.searchParams.entries());
+    const options = toObject<string>(url.searchParams.entries());
     const value = await request.text();
     const method = request.method;
     switch (method) {
         case "GET":
+            if (key.length === 0) {
+                throw new Error("GET request must have a key");
+            }
             return await get(key, options);
         case "PUT":
             return await put(key, value, options);
