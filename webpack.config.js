@@ -1,8 +1,9 @@
 const path = require("path");
+const fs = require("fs");
 
 module.exports = {
     entry: './src/index.ts',
-    devtool: 'inline-source-map',
+    devtool: 'cheap-module-source-map',
     module: {
         rules: [{
             test: /\.ts$/,
@@ -10,8 +11,7 @@ module.exports = {
             exclude: /node_modules/
         }]
     },
-    node: false,
-    mode: 'production',
+    mode: 'development',
     resolve: {
         extensions: ['.ts', '.js'],
         fallback: {
@@ -27,5 +27,6 @@ module.exports = {
     output: {
         path: path.join(__dirname, 'dist'),
         filename: 'worker.js',
+        sourceMapFilename: "worker.js.map",
     },
 };

@@ -1,15 +1,21 @@
 import {toKVNamespaceGetOptions, toKVNamespaceListOptions, toKVNamespacePutOptions, toObject} from "./utils";
-import sourcemap from 'source-map-support';
+import sourcemap, {UrlAndMap} from 'source-map-support';
 
 sourcemap.install({
-    handleUncaughtExceptions: true,
-    environment: 'auto',
+    handleUncaughtExceptions: false,
+    environment: 'browser',
+    retrieveSourceMap(source: string): UrlAndMap | null {
+        return {
+            url: source,
+            map: "WILL_REPLACED"
+        }
+    },
+
 });
 
 addEventListener("fetch", (event) => {
-    event.respondWith(handleRequest(event.request).catch((err:Error) => {
-        console.error(err);
-        console.log(sourcemap.getErrorSource(err))
+    event.respondWith(handleRequest(event.request).catch((err: Error) => {
+        console.log(err.stack);
         return new Response(err.stack, {status: 500})
     }));
 });

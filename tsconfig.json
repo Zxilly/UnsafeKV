@@ -4,14 +4,14 @@
     "module": "commonjs",
     "target": "esnext",
     "lib": ["esnext"],
-    "alwaysStrict": true,
     "strict": true,
     "preserveConstEnums": true,
     "moduleResolution": "node",
     "sourceMap": true,
+    "removeComments": true,
     "esModuleInterop": true,
     "types": [
-      "@cloudflare/workers-types",
+      "@cloudflare/workers-types"
     ]
   },
   "include": ["src"],
