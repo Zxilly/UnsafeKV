@@ -1,15 +1,21 @@
 import {toKVNamespaceGetOptions, toKVNamespaceListOptions, toKVNamespacePutOptions, toObject} from "./utils";
-import sourcemap, {UrlAndMap} from 'source-map-support';
+import sourceMapSupport, {UrlAndMap} from 'source-map-support';
 
-sourcemap.install({
+const sourceMap = "WILL_REPLACED";
+
+sourceMapSupport.install({
     handleUncaughtExceptions: false,
     environment: 'browser',
     retrieveSourceMap(source: string): UrlAndMap | null {
         return {
             url: source,
-            map: "WILL_REPLACED"
+            map: decodeURIComponent(sourceMap)
         }
     },
+    retrieveFile(path: string): string {
+        console.log(path);
+        return path;
+    }
 
 });
 
