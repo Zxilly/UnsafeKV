@@ -1,4 +1,5 @@
 import {
+    CORSResponse,
     toKVNamespaceGetOptions,
     toKVNamespaceListOptions,
     toKVNamespacePutOptions,
@@ -24,7 +25,7 @@ async function handleRequest(request: Request): Promise<Response> {
     switch (method) {
         case "GET":
             if (key.length === 0) {
-                return Response.redirect("https://github.com/Zxilly/UnsafeKV/", 302);
+                return CORSResponse.redirect("https://github.com/Zxilly/UnsafeKV/", 302);
             }
             return await get(key, options);
         case "PUT":
@@ -33,33 +34,33 @@ async function handleRequest(request: Request): Promise<Response> {
             return await del(key);
         case "LIST":
             if (key !== "") {
-                return new Response("LIST is only supported on /", {status: 400});
+                return new CORSResponse("LIST is only supported on /", {status: 400});
             }
             return await list(options);
     }
-    return new Response("Method not allowed", {status: 405});
+    return new CORSResponse("Method not allowed", {status: 405});
 }
 
 async function get(key: string, options: stringDict): Promise<Response> {
     const result = await UnsafeKV.get(key, toKVNamespaceGetOptions(options));
     if (result) {
-        return new Response(result, {status: 200});
+        return new CORSResponse(result, {status: 200});
     } else {
-        return new Response("Not found", {status: 404});
+        return new CORSResponse("Not found", {status: 404});
     }
 }
 
 async function put(key: string, value: string, options: stringDict): Promise<Response> {
     await UnsafeKV.put(key, value, toKVNamespacePutOptions(options));
-    return new Response("OK", {status: 200});
+    return new CORSResponse("OK", {status: 200});
 }
 
 async function del(key: string): Promise<Response> {
     if (!(await UnsafeKV.get(key))) {
-        return new Response("Not found", {status: 404});
+        return new CORSResponse("Not found", {status: 404});
     } else {
         await UnsafeKV.delete(key);
-        return new Response("OK", {status: 200});
+        return new CORSResponse("OK", {status: 200});
     }
 }
 
