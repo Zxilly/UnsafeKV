@@ -33,7 +33,7 @@ Sets the value of the key.
 
 Deletes the key if it exists.
 
-### LIST `/`
+### ENUM `/`
 
 List all data, in [`KVNamespaceListResult`](https://github.com/cloudflare/workers-types/blob/fab61eda806db2aa689d39a8861256cfe1dc473c/index.d.ts#L948) format.
 

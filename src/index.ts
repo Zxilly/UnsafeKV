@@ -30,9 +30,9 @@ async function handleRequest(request: Request): Promise<Response> {
             return assertKeyNotNone(key, await put(key, value, options));
         case "DELETE":
             return assertKeyNotNone(key, await del(key));
-        case "LIST":
+        case "ENUM":
             if (key !== "") {
-                return new CORSResponse("LIST is only supported on /", {status: 400});
+                return new CORSResponse("ENUM is only supported on /", {status: 400});
             }
             return await list(options);
         case "OPTIONS":
