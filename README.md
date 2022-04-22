@@ -21,13 +21,13 @@ Emitted asset will be available at `/dist`
 
 Returns the value of the key, if exists.
 
-`KVNamespaceGetOptions<"text">` is available as query parameter.
+[`KVNamespaceGetOptions<"text">`](https://github.com/cloudflare/workers-types/blob/fab61eda806db2aa689d39a8861256cfe1dc473c/overrides/kv.d.ts#L1) is available as query parameter.
 
 ### PUT `/{key}`
 
 Sets the value of the key.
 
-`KVNamespacePutOptions` is available as query parameter.
+[`KVNamespacePutOptions`](https://github.com/cloudflare/workers-types/blob/fab61eda806db2aa689d39a8861256cfe1dc473c/index.d.ts#L954) is available as query parameter.
 
 ### DELETE `/{key}`
 
@@ -35,9 +35,9 @@ Deletes the key if it exists.
 
 ### LIST `/`
 
-List all data, in `KVNamespaceListResult` format.
+List all data, in [`KVNamespaceListResult`](https://github.com/cloudflare/workers-types/blob/fab61eda806db2aa689d39a8861256cfe1dc473c/index.d.ts#L948) format.
 
-`KVNamespaceListOptions` is available as query parameter.
+[`KVNamespaceListOptions`](https://github.com/cloudflare/workers-types/blob/fab61eda806db2aa689d39a8861256cfe1dc473c/index.d.ts#L942) is available as query parameter.
 
 ## License
 
