@@ -7,9 +7,19 @@ import {
     toObject
 } from "./utils";
 
+let protect = true;
+
+try {
+    TOKEN
+} catch (e) {
+    if (e instanceof ReferenceError) {
+        protect = false;
+    }
+}
 
 addEventListener("fetch", (event) => {
     event.respondWith(handleRequest(event.request).catch((err: Error) => {
+        console.error(err);
         return new Response(err.message, {status: 500})
     }));
 });
@@ -17,27 +27,33 @@ addEventListener("fetch", (event) => {
 export type stringDict = { [key: string]: string };
 
 async function handleRequest(request: Request): Promise<Response> {
+    if (protect) {
+        const token = request.headers.get("Token");
+        if (token !== TOKEN) {
+            return new Response("Unauthorized", {status: 401})
+        }
+    }
+
     const url = new URL(request.url);
     const key = url.pathname.slice(1);
-
     const options = toObject<string>(url.searchParams.entries());
     const value = await request.text();
     const method = request.method;
     switch (method) {
         case "GET":
-            return assertKeyNotNone(key, await get(key, options), CORSResponse.redirect("https://github.com/Zxilly/UnsafeKV/", 302));
-        case "PUT":
-            return assertKeyNotNone(key, await put(key, value, options));
-        case "DELETE":
-            return assertKeyNotNone(key, await del(key));
-        case "ENUM":
-            if (key !== "") {
-                return new CORSResponse("ENUM is only supported on /", {status: 400});
+            if (key === "") {
+                return await list(options);
+            } else {
+                return await get(key, options);
             }
-            return await list(options);
+        case "PUT":
+            return assertKeyNotNone(key, async () => put(key, value, options));
+        case "DELETE":
+            return assertKeyNotNone(key, async () => del(key));
         case "OPTIONS":
+        case "HEAD":
             const resp = new CORSResponse("", {status: 200});
-            resp.headers.set("Allow", "GET, PUT, DELETE, LIST, OPTIONS, HEAD");
+            resp.headers.set("Allow", "GET, PUT, DELETE, OPTIONS, HEAD");
             return resp;
     }
     return new CORSResponse("Method not allowed", {status: 405});

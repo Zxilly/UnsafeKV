@@ -17,6 +17,12 @@ Emitted asset will be available at `/dist`
 
 ## Endpoint
 
+### GET `/`
+
+List all key, in [`KVNamespaceListResult`](https://github.com/cloudflare/workers-types/blob/fab61eda806db2aa689d39a8861256cfe1dc473c/index.d.ts#L948) format.
+
+[`KVNamespaceListOptions`](https://github.com/cloudflare/workers-types/blob/fab61eda806db2aa689d39a8861256cfe1dc473c/index.d.ts#L942) is available as query parameter.
+
 ### GET `/{key}`
 
 Returns the value of the key, if exists.
@@ -32,12 +38,6 @@ Sets the value of the key.
 ### DELETE `/{key}`
 
 Deletes the key if it exists.
-
-### ENUM `/`
-
-List all data, in [`KVNamespaceListResult`](https://github.com/cloudflare/workers-types/blob/fab61eda806db2aa689d39a8861256cfe1dc473c/index.d.ts#L948) format.
-
-[`KVNamespaceListOptions`](https://github.com/cloudflare/workers-types/blob/fab61eda806db2aa689d39a8861256cfe1dc473c/index.d.ts#L942) is available as query parameter.
 
 ## License
 

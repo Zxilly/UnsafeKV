@@ -7,21 +7,21 @@ export function toObject<T>(iterable: Iterable<[string, T]>): { [key: string]: T
     }, {});
 }
 
-export function assertKeyNotNone(key: string | null | undefined, resp: Response, errResp: Response | null = null): Response {
+export async function assertKeyNotNone(key: string, resp: () => Promise<Response>, errResp: Response | null = null): Promise<Response> {
     if (errResp === null) {
         errResp = new Response("Key is required", {status: 400});
     }
-    if (key === null || key === undefined || key === "") {
+    if (key === "") {
         return errResp;
     }
-    return resp;
+    return resp();
 }
 
 export class CORSResponse extends Response {
     constructor(bodyInit?: BodyInit | null, maybeInit?: ResponseInit | Response) {
         super(bodyInit, maybeInit);
         this.headers.set("Access-Control-Allow-Origin", "*");
-        this.headers.set("Access-Control-Allow-Methods", "GET, PUT, LIST, DELETE, OPTIONS, HEAD");
+        this.headers.set("Access-Control-Allow-Methods", "GET, PUT, DELETE, OPTIONS, HEAD");
         this.headers.set("Access-Control-Allow-Credentials", "true");
     }
 }

@@ -9,7 +9,7 @@ module.exports = {
             exclude: /node_modules/
         }]
     },
-    mode: 'production',
+    mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
     resolve: {
         extensions: ['.ts', '.js'],
     },
