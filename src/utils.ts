@@ -7,6 +7,16 @@ export function toObject<T>(iterable: Iterable<[string, T]>): { [key: string]: T
     }, {});
 }
 
+export function assertKeyNotNone(key: string | null | undefined, resp: Response, errResp: Response | null = null): Response {
+    if (errResp === null) {
+        errResp = new Response("Key is required", {status: 400});
+    }
+    if (key === null || key === undefined || key === "") {
+        return errResp;
+    }
+    return resp;
+}
+
 export class CORSResponse extends Response {
     constructor(bodyInit?: BodyInit | null, maybeInit?: ResponseInit | Response) {
         super(bodyInit, maybeInit);

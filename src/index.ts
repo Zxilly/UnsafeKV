@@ -1,4 +1,5 @@
 import {
+    assertKeyNotNone,
     CORSResponse,
     toKVNamespaceGetOptions,
     toKVNamespaceListOptions,
@@ -24,14 +25,11 @@ async function handleRequest(request: Request): Promise<Response> {
     const method = request.method;
     switch (method) {
         case "GET":
-            if (key.length === 0) {
-                return CORSResponse.redirect("https://github.com/Zxilly/UnsafeKV/", 302);
-            }
-            return await get(key, options);
+            return assertKeyNotNone(key, await get(key, options), CORSResponse.redirect("https://github.com/Zxilly/UnsafeKV/", 302));
         case "PUT":
-            return await put(key, value, options);
+            return assertKeyNotNone(key, await put(key, value, options));
         case "DELETE":
-            return await del(key);
+            return assertKeyNotNone(key, await del(key));
         case "LIST":
             if (key !== "") {
                 return new CORSResponse("LIST is only supported on /", {status: 400});
@@ -69,7 +67,7 @@ async function del(key: string): Promise<Response> {
 }
 
 async function list(options: stringDict): Promise<Response> {
-    const result = await UnsafeKV.list(toKVNamespaceListOptions(options));
+    const result = await UnsafeKV.list(toKVNamespaceListOptions(options)) || {};
     return new Response(JSON.stringify(result), {status: 200});
 }
 
