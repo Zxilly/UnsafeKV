@@ -1,28 +1,14 @@
-import {toKVNamespaceGetOptions, toKVNamespaceListOptions, toKVNamespacePutOptions, toObject} from "./utils";
-import sourceMapSupport, {UrlAndMap} from 'source-map-support';
+import {
+    toKVNamespaceGetOptions,
+    toKVNamespaceListOptions,
+    toKVNamespacePutOptions,
+    toObject
+} from "./utils";
 
-const sourceMap = "WILL_REPLACED";
-
-sourceMapSupport.install({
-    handleUncaughtExceptions: false,
-    environment: 'browser',
-    retrieveSourceMap(source: string): UrlAndMap | null {
-        return {
-            url: source,
-            map: decodeURIComponent(sourceMap)
-        }
-    },
-    retrieveFile(path: string): string {
-        console.log(path);
-        return path;
-    }
-
-});
 
 addEventListener("fetch", (event) => {
     event.respondWith(handleRequest(event.request).catch((err: Error) => {
-        console.log(err.stack);
-        return new Response(err.stack, {status: 500})
+        return new Response(err.message, {status: 500})
     }));
 });
 
@@ -38,7 +24,7 @@ async function handleRequest(request: Request): Promise<Response> {
     switch (method) {
         case "GET":
             if (key.length === 0) {
-                throw new Error("GET request must have a key");
+                return Response.redirect("https://github.com/Zxilly/UnsafeKV/", 302);
             }
             return await get(key, options);
         case "PUT":

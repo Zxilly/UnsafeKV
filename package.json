@@ -5,9 +5,8 @@
   "repository": "git@github.com:Zxilly/UnsafeKV.git",
   "author": "Zxilly <zxilly@outlook.com>",
   "scripts": {
-    "build": "webpack --progress && yarn modify",
-    "preview": "wrangler preview --watch",
-    "modify": "node build.js"
+    "build": "webpack --progress",
+    "preview": "wrangler preview --watch"
   },
   "license": "MIT",
   "devDependencies": {
@@ -18,9 +17,5 @@
     "webpack": "^5.38.1",
     "webpack-cli": "^4.7.0"
   },
-  "packageManager": "yarn@3.2.0",
-  "dependencies": {
-    "@types/source-map-support": "^0.5.4",
-    "source-map-support": "^0.5.21"
-  }
+  "packageManager": "yarn@3.2.0"
 }

@@ -1,9 +1,7 @@
 const path = require("path");
-const fs = require("fs");
-
 module.exports = {
     entry: './src/index.ts',
-    devtool: 'cheap-module-source-map',
+    devtool: 'inline-cheap-module-source-map',
     module: {
         rules: [{
             test: /\.ts$/,
@@ -11,13 +9,9 @@ module.exports = {
             exclude: /node_modules/
         }]
     },
-    mode: 'development',
+    mode: 'production',
     resolve: {
         extensions: ['.ts', '.js'],
-        fallback: {
-            "path": false,
-            "fs": false
-        }
     },
     stats: {
         colors: true,
