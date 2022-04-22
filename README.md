@@ -37,6 +37,7 @@ Deletes the key if it exists.
 
 List all data, in `KVNamespaceListResult` format.
 
+`KVNamespaceListOptions` is available as query parameter.
 
 ## License
 
