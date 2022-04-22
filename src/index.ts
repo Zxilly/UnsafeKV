@@ -37,6 +37,10 @@ async function handleRequest(request: Request): Promise<Response> {
                 return new CORSResponse("LIST is only supported on /", {status: 400});
             }
             return await list(options);
+        case "OPTIONS":
+            const resp = new CORSResponse("", {status: 200});
+            resp.headers.set("Allow", "GET, PUT, DELETE, LIST, OPTIONS, HEAD");
+            return resp;
     }
     return new CORSResponse("Method not allowed", {status: 405});
 }

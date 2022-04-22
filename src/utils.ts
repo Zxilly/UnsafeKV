@@ -11,7 +11,7 @@ export class CORSResponse extends Response {
     constructor(bodyInit?: BodyInit | null, maybeInit?: ResponseInit | Response) {
         super(bodyInit, maybeInit);
         this.headers.set("Access-Control-Allow-Origin", "*");
-        this.headers.set("Access-Control-Allow-Methods", "GET,PUT,LIST,DELETE,OPTIONS,HEAD");
+        this.headers.set("Access-Control-Allow-Methods", "GET, PUT, LIST, DELETE, OPTIONS, HEAD");
         this.headers.set("Access-Control-Allow-Credentials", "true");
     }
 }
