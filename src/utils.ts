@@ -23,6 +23,7 @@ export class CORSResponse extends Response {
         this.headers.set("Access-Control-Allow-Origin", "*");
         this.headers.set("Access-Control-Allow-Methods", "GET, PUT, DELETE, OPTIONS, HEAD");
         this.headers.set("Access-Control-Allow-Credentials", "true");
+        this.headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization, Token");
     }
 }
 
