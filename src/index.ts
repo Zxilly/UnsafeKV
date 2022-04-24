@@ -26,19 +26,22 @@ addEventListener("fetch", (event) => {
 
 export type stringDict = { [key: string]: string };
 
+const safe_methods = ["HEAD", "OPTIONS"];
+
 async function handleRequest(request: Request): Promise<Response> {
-    if (protect) {
+    const url = new URL(request.url);
+    const key = url.pathname.slice(1);
+    const options = toObject<string>(url.searchParams.entries());
+    const value = await request.text();
+    const method = request.method;
+
+    if (protect && !safe_methods.includes(method)) {
         const token = request.headers.get("Token");
         if (token !== TOKEN) {
             return new Response("Unauthorized", {status: 401})
         }
     }
 
-    const url = new URL(request.url);
-    const key = url.pathname.slice(1);
-    const options = toObject<string>(url.searchParams.entries());
-    const value = await request.text();
-    const method = request.method;
     switch (method) {
         case "GET":
             if (key === "") {
